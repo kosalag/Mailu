@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: mailu-front
@@ -146,3 +146,57 @@ spec:
   - name: http
     port: 80
     protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-mail
+  namespace: mailu-mailserver
+  labels:
+    k8s-app: mail-loadbalancer
+    component: ingress-controller
+    type: nginx
+spec:
+  type: NodePort
+  selector:
+    k8s-app: mail-loadbalancer
+    component: ingress-controller
+    type: nginx
+  ports:
+  - name: pop3
+    port: 110
+    nodePort: 30110
+    protocol: TCP
+  - name: pop3s
+    port: 995
+    nodePort: 30995
+    protocol: TCP
+  - name: imap
+    port: 143
+    nodePort: 30143
+    protocol: TCP
+  - name: imaps
+    port: 993
+    nodePort: 30993
+    protocol: TCP
+  - name: smtp
+    port: 25
+    nodePort: 30025
+    protocol: TCP
+  - name: smtps
+    port: 465
+    nodePort: 30465
+    protocol: TCP
+  - name: smtpd
+    port: 587
+    nodePort: 30587
+    protocol: TCP
+  - name: smtp-auth
+    port: 10025
+    nodePort: 30125
+    protocol: TCP
+  - name: imap-auth
+    port: 10143
+    nodePort: 31143
+    protocol: TCP
+
