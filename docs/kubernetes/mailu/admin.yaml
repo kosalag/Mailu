@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: admin
-        image: mailu/admin:master
+        image: lsflk/mailu-admin:latest
         imagePullPolicy: Always
         envFrom:
           - configMapRef:

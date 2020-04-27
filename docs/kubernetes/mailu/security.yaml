@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: antispam
-        image: mailu/rspamd:master
+        image: lsflk/mailu-rspamd:latest
         imagePullPolicy: Always
         envFrom:
           - configMapRef:
@@ -49,7 +49,7 @@ spec:
             mountPath: /etc/rspamd/override.d
             subPath: rspamd-overrides
       - name: antivirus
-        image: mailu/clamav:master
+        image: lsflk/mailu-clamav:latest
         imagePullPolicy: Always
         resources:
           requests:

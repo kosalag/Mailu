@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: roundcube
-        image: mailu/roundcube:master
+        image: lsflk/mailu-roundcube:latest
         imagePullPolicy: Always
         envFrom:
           - configMapRef:

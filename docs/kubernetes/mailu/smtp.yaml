@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: smtp
-        image: mailu/postfix:master
+        image: lsflk/mailu-postfix:latest
         imagePullPolicy: Always
         envFrom:
           - configMapRef:

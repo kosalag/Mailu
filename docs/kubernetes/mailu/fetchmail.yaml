@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: fetchmail
-        image: mailu/fetchmail:master
+        image: lsflk/mailu-fetchmail:latest
         imagePullPolicy: Always
         envFrom:
           - configMapRef:
