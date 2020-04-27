@@ -84,7 +84,10 @@ echo $ADMIN_USER
 
 echo "******** Writing Config Changes ********"
 
-# Write configurations to configmap.yaml
+# Write configurations to configmap.yaml and ingress.yaml
+
+sed -i "s/mail.example.com/$HOST_NAME/g" ingress.yaml
+
 sed -i "s/mail.example.com/$HOST_NAME/g" configmap.yaml
 sed -i "s/example.com/$DOMAIN/g" configmap.yaml
 
