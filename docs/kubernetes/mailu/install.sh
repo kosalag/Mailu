@@ -6,15 +6,12 @@
 
 VERSION=0.1.0
 SUBJECT="Deployment Script for Mailu"
-# HOST_NAME=''
-# ADMIN_USER=''
-# ADMIN_PWD=''
+
 USAGE () {
     echo  " Options:
 
-  -d, HOST_NAME Name
+  -d, Domain Name
   -a, Admin User Name
-  -p, Admin password
   -h, 
   
   Display this help and exit"
@@ -36,15 +33,12 @@ while getopts ":d:a:vh" optname
         ;;
       "d")
         HOST_NAME=$OPTARG
-        # echo "-d argument: $OPTARG"
         ;;
       "a")
         ADMIN_USER=$OPTARG
-        # echo "-a argument: $OPTARG"
         ;;
       "h")
         USAGE
-        # echo -n $USAGE
         exit 0;
         ;;
       "?")
@@ -87,7 +81,6 @@ DOMAIN=${HOST_NAME#*.*} #Get Domain from the given hostname
 echo $HOST_NAME
 echo $DOMAIN
 echo $ADMIN_USER
-echo $ADMIN_PWD
 
 echo "******** Writing Config Changes ********"
 
@@ -106,26 +99,26 @@ EOT
 echo "******** Writing Config Changes Success ********"
 
 
-# kubectl create -f rbac.yaml
-# kubectl create -f configmap.yaml
-# kubectl create -f pvc.yaml && sleep 5
-# kubectl create -f redis.yaml && sleep 30➜  mailu git:(master) ✗ echo $➜  mailu git:(master) ✗ echo $
-# kubectl create -f front.yaml && sleep 30
-# kubectl create -f webmail.yaml && sleep 30
-# kubectl create -f imap.yaml && sleep 30
-# kubectl create -f security.yaml && sleep 30
-# kubectl create -f smtp.yaml && sleep 30
-# kubectl create -f fetchmail.yaml && sleep 30
-# kubectl create -f admin.yaml && sleep 30
-# kubectl create -f webdav.yaml && sleep 30
-# kubectl create -f ingress.yaml && sleep 30
+kubectl create -f rbac.yaml
+kubectl create -f configmap.yaml
+kubectl create -f pvc.yaml && sleep 10
+kubectl create -f redis.yaml && sleep 30
+kubectl create -f front.yaml && sleep 30
+kubectl create -f webmail.yaml && sleep 30
+kubectl create -f imap.yaml && sleep 30
+kubectl create -f security.yaml && sleep 30
+kubectl create -f smtp.yaml && sleep 30
+kubectl create -f fetchmail.yaml && sleep 30
+kubectl create -f admin.yaml && sleep 30
+kubectl create -f webdav.yaml && sleep 30
+kubectl create -f ingress.yaml && sleep 30
 
 
 # Get IMAP Pod Name
 IMAP_POD=$(kubectl get po -l app=mailu-imap -o custom-columns=NAME:.metadata.name --no-headers -n mailu-mailserver)
 echo "IMAP POD NAME - " $IMAP_POD
-kubectl cp dovecot.conf $IMAP_POD:/home/dovecot.conf -n mailu-mailserver
-# kubectl delete po $IMAP_POD -n mailu-mailserver && sleep 30
+kubectl cp dovecot.conf $IMAP_POD:/overrides/dovecot.conf -n mailu-mailserver
+kubectl delete po $IMAP_POD -n mailu-mailserver && sleep 30
 kubectl get po -n mailu-mailserver
 
 
